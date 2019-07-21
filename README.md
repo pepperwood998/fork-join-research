@@ -34,6 +34,26 @@ Là một cơ chế  lập lịch cho chương trình đa luồng
 + Công việc mới này ban đầu sẽ được cho vào hàng đợi của đơn vị xử lý hiện tại.
 + Nếu một đơn vị xử  lý mà thực hiện hết việc của nó, nó sẽ xem và "cướp" công việc từ hàng đợi của một đơn vị xử lý khác
 
+## Ví dụ
+#### Mã giả
+    function f(a, b):
+        c = g(a) (nhiệm vụ được fork chạy song song)
+        d = h(b)
+        Chờ kết quả từ trên (join)
+        return c + d
+
+    function g(x):
+        return x * 2
+
+    function h(x):
+        b = g(x) (nhiệm vụ được fork chạy song song)
+        c = x + 1
+        Chờ kết quả từ trên (join)
+        return b + c
+
+![Ảnh minh họa flow chg trình trên](./img/fork-join-sample.png "Flow chương trình")
+*Ở đây công việc của cơ chế  lập lịch work-stealing là đưa từng công đoạn tính toán cho đơn vị xử lý sao cho chương trình hoàn thành theo tuần tự đúng.*
+
 
 ## Đường dẫn tham khảo
 [Fork-join/Fork-join-framework trong Java](https://gpcoder.com/3573-su-dung-fork-join-framework-voi-forkjoinpool-trong-java/ "Boi Việt Nam")  
